@@ -2,6 +2,8 @@
 
 namespace App;
 
+use App\Providers\EntityManagerProvider;
+use Doctrine\ORM\EntityManager;
 use Exception;
 use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +30,7 @@ class Main
 
     private function handleDependencies(Container $container)
     {
-
+        $container->register(EntityManager::class, new EntityManagerProvider);
     }
 
     private function config()
@@ -37,7 +39,9 @@ class Main
 
         $config = [
             'APP_ENV',
-            'DB_HOST',
+            'DB_USER',
+            'DB_PASS',
+            'DB_NAME'
         ];
 
         $envConfig = getenv();

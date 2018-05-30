@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Providers\ProviderInterface;
 use ReflectionClass;
 use ProviderInterface;
 use ReflectionMethod;
@@ -74,6 +75,11 @@ class Container
         }
 
         return new $key(...$builtParams);
+    }
+
+    public function getConfig(string $key)
+    {
+        return $this->config[$key];
     }
 
     public function getMethodArgs($controller, string $method)
