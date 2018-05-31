@@ -4,7 +4,6 @@ namespace App;
 
 use App\Providers\ProviderInterface;
 use ReflectionClass;
-use ProviderInterface;
 use ReflectionMethod;
 
 class Container
@@ -13,18 +12,7 @@ class Container
 
     private $providers = [];
 
-    /**
-     * @var array
-     */
-    private $config;
-
-    /**
-     * @param array $config
-     */
-    public function __construct(array $config)
-    {
-        $this->config = $config;
-    }
+    private $cache = [];
 
     public function bind(string $interface, string $implementation)
     {
@@ -36,22 +24,36 @@ class Container
         $this->providers[$key] = $provider;
     }
 
+    public function store($key, $value)
+    {
+        $this->cache[$key] = $value;
+    }
+
     public function get(string $key)
     {
-        ## If the key we're trying to fetch is an interface registered with a binding,
-        #  we'll try to fetch the implementation from the container instead
+        if(isset($this->cache[$key]))
+        {
+            return $this->cache[$key];
+        }
+
+        ## Check for an interface request
         if(isset($this->interfaces[$key]))
         {
             return $this->get($this->interfaces[$key]);
         }
 
+        ## Check for a provider
         if(isset($this->providers[$key]))
         {
             /** @var ProviderInterface $provider */
             $provider = $this->providers[$key];
-            return $provider->build($this);
+            $dependency = $provider->build($this);
+            $this->cache[$key] = $dependency;
+
+            return $dependency;
         }
 
+        ## Fallback to reflection
         $reflectionClass = new ReflectionClass($key);
 
         $constructor = $reflectionClass->getConstructor();
@@ -74,12 +76,10 @@ class Container
             $builtParams[] = $this->get($param->getClass()->getName());
         }
 
-        return new $key(...$builtParams);
-    }
+        $dependency = new $key(...$builtParams);
+        $this->cache[$key] = $dependency;
 
-    public function getConfig(string $key)
-    {
-        return $this->config[$key];
+        return $dependency;
     }
 
     public function getMethodArgs($controller, string $method)

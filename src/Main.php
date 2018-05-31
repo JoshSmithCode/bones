@@ -2,60 +2,33 @@
 
 namespace App;
 
-use App\Providers\EntityManagerProvider;
-use Doctrine\ORM\EntityManager;
-use Exception;
-use Symfony\Component\Dotenv\Dotenv;
 use Symfony\Component\HttpFoundation\Request;
 
 class Main
 {
-
-    public function handleRequest()
+    public function handleRequest(Request $request)
     {
-        $config = $this->config();
+        ## Dependency Injection is convenient, let's use a Container
+        $container = new Container;
 
-        $container = new Container($config);
+        ## This config class makes sure we always have access to the config we want. Jump over to Config.php
+        #  to set up any additional config you might need
+        $container->store('config', new Config);
 
-        $this->handleDependencies($container);
+        ## A handy little function to register dependencies for the Container. Jump over to Dependencies.php to
+        #  add any other dependencies you need. (Helps keep the 'use' imports up the top small here in main)
+        (new Dependencies)->setupContainer($container);
 
+        ## A router based on FastRoute that stores all the different url's we'll respond to
         $router = new Router($container);
 
-        $router->addRoutes();
+        ## Another handy function to store the routes, jump over to Routes.php to add them
+        (new Routes)->addRoutes($router);
 
-        $response = $router->dispatch(Request::createFromGlobals());
+        ## The router will take the $request and see if it can send it into a controller
+        $response = $router->dispatch($request);
 
+        ## We're all done here!
         $response->send();
-    }
-
-    private function handleDependencies(Container $container)
-    {
-        $container->register(EntityManager::class, new EntityManagerProvider);
-    }
-
-    private function config()
-    {
-        (new Dotenv)->load(dirname(__DIR__).'/.env');
-
-        $config = [
-            'APP_ENV',
-            'DB_USER',
-            'DB_PASS',
-            'DB_NAME'
-        ];
-
-        $envConfig = getenv();
-
-        foreach($config as $item)
-        {
-            if(getenv($item) === false)
-            {
-                throw new Exception("Environment variable \"{$item}\" is missing");
-            }
-
-            $envConfig[$item] = getenv($item);
-        }
-
-        return $envConfig;
     }
 }

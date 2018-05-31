@@ -29,15 +29,19 @@ class Router extends FastRouteCollector
         parent::__construct(new Std, new GroupDataGenerator);
     }
 
-    public function addRoutes()
-    {
-        $this->get('/home', [IndexController::class, 'index']);
-    }
-
     /**
-     * @param Request $request
-     * @return Response
-     * @throws Exception
+     * This is where we match up the URI to the controllers.
+     *
+     * If you came here from Routes.php because you're interested in changing the shape of our handlers,
+     * you can see what we're doing below.
+     *
+     * $handler is the array we built in Routes.php for each of our routes. We use it by grabbing $controllerClass and
+     * $method out of it, then we use the container to get the Controller and whatever arguments the $method needs
+     * and the final step is to just call that method on the controller.
+     *
+     * If you want to change anything about the $handler, here and your Routes.php are the place to do it, but
+     * this seems like a sensible default
+     *
      */
     public function dispatch(Request $request) : Response
     {
