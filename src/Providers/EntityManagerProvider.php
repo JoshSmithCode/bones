@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Config;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\Setup;
 
@@ -13,19 +14,21 @@ class EntityManagerProvider implements ProviderInterface
     public function build(Container $container)
     {
         $paths = [dirname(__DIR__) . "/Entities"];
-        $isDevMode = $container->getConfig('APP_ENV') == 'development';
+
+        /** @var Config $config */
+        $config = $container->get('config');
+
+        $isDevMode = $config->getAppEnv() == 'development';
 
         $dbParams = [
             'driver'   => 'pdo_mysql',
-            'user'     => $container->getConfig('DB_USER'),
-            'password' => $container->getConfig('DB_PASS'),
-            'dbname'   => $container->getConfig('DB_NAME'),
+            'user'     => $config->getDbUser(),
+            'password' => $config->getDbPass(),
+            'dbname'   => $config->getDbName(),
         ];
 
-        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
+        $metadataConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
 
-        $config->setNamingStrategy(new BonesNamingStrategy);
-
-        return EntityManager::create($dbParams, $config);
+        return EntityManager::create($dbParams, $metadataConfig);
     }
 }
