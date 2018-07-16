@@ -27,6 +27,11 @@ class Config
      */
     private $dbName;
 
+    /**
+     * @var string
+     */
+    private $dbHost;
+
     public function __construct()
     {
         (new Dotenv)->load(dirname(__DIR__).'/.env');
@@ -35,6 +40,7 @@ class Config
         $this->setProperty('dbUser', 'DB_USER');
         $this->setProperty('dbPass', 'DB_PASS');
         $this->setProperty('dbName', 'DB_NAME');
+        $this->setProperty('dbHost', 'DB_HOST');
     }
 
     private function setProperty(string $propertyName, string $envName)
@@ -45,6 +51,8 @@ class Config
         {
             throw new Exception("Your config is trying to get something named {$envName} but it doesn't exist! Make sure it's in your .env file or server config");
         }
+
+        $this->$propertyName = $envValue;
     }
 
     /**
@@ -77,5 +85,10 @@ class Config
     public function getDbName(): string
     {
         return $this->dbName;
+    }
+
+    public function getDbHost(): string
+    {
+        return $this->dbHost;
     }
 }

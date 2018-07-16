@@ -73,6 +73,11 @@ class Container
                 $builtParams[] = null;
             }
 
+            if($param->getClass() == null)
+            {
+                var_dump($constructorParams);die;
+            }
+
             $builtParams[] = $this->get($param->getClass()->getName());
         }
 

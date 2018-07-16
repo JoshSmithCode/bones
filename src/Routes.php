@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Controllers\IndexController;
+use App\Controllers\PublicController;
 
 class Routes
 {
@@ -25,6 +25,8 @@ class Routes
      */
     public function addRoutes(Router $router)
     {
-        $router->get('/', [IndexController::class, 'index']);
+        $router->get('/', [PublicController::class, 'index']);
+
+        $router->post('/signup', [PublicController::class, 'signup']);
     }
 }

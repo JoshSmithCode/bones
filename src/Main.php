@@ -15,6 +15,8 @@ class Main
         #  to set up any additional config you might need
         $container->store('config', new Config);
 
+        $container->store(Request::class, $request);
+
         ## A handy little function to register dependencies for the Container. Jump over to Dependencies.php to
         #  add any other dependencies you need. (Helps keep the 'use' imports up the top small here in main)
         (new Dependencies)->setupContainer($container);

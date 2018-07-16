@@ -12,7 +12,7 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector as FastRouteCollector;
 use FastRoute\RouteParser\Std;
 
-use App\Controllers\IndexController;
+use App\Controllers\PublicController;
 use Symfony\Component\HttpFoundation\Response;
 
 class Router extends FastRouteCollector

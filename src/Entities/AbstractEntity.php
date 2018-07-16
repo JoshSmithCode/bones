@@ -7,10 +7,16 @@ use Doctrine\ORM\Mapping as ORM;
 abstract class AbstractEntity
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue(strategy="AUTO")
      *
      * @var int
      */
-    private $id;
+    protected $id;
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
 }
