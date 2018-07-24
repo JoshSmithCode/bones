@@ -4,6 +4,9 @@ namespace App\Console;
 
 use App\Bones;
 use App\Console\Commands\AbstractCommand;
+use App\Console\Commands\ExampleCommand;
+use App\Console\Commands\GenerateMigrationCommand;
+use App\Console\Commands\HelpCommand;
 
 class Main extends Bones
 {
@@ -38,8 +41,9 @@ class Main extends Bones
 
     private function registerCommands(): void
     {
-        $this->addCommand('help', 'App\Console\Commands\HelpCommand');
-        $this->addCommand('example', 'App\Console\Commands\ExampleCommand');
+        $this->addCommand('help', HelpCommand::class);
+        $this->addCommand('example', ExampleCommand::class);
+        $this->addCommand('migration:generate', GenerateMigrationCommand::class)
     }
 
     private function addCommand(string $name, string $class)
