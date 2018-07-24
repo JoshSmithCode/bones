@@ -1,25 +1,18 @@
 <?php
 
-namespace App;
+namespace App\Http;
+
+use App\Bones;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class Main
+class Main extends Bones
 {
     public function handleRequest(Request $request)
     {
-        ## Dependency Injection is convenient, let's use a Container
-        $container = new Container;
-
-        ## This config class makes sure we always have access to the config we want. Jump over to Config.php
-        #  to set up any additional config you might need
-        $container->store('config', new Config);
+        $container = $this->getContainer();
 
         $container->store(Request::class, $request);
-
-        ## A handy little function to register dependencies for the Container. Jump over to Dependencies.php to
-        #  add any other dependencies you need. (Helps keep the 'use' imports up the top small here in main)
-        (new Dependencies)->setupContainer($container);
 
         ## A router based on FastRoute that stores all the different url's we'll respond to
         $router = new Router($container);

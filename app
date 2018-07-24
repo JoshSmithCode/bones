@@ -2,5 +2,5 @@
 <?php
 
 require 'vendor/autoload.php';
-$app = new \Console\Main;
-$app->runWithTry($argv);
+$app = new App\Console\Main;
+$app->run($argv);

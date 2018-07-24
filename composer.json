@@ -7,12 +7,12 @@
         "symfony/dotenv": "^4.0",
         "doctrine/orm": "2.6",
         "doctrine/migrations": "^1.8",
-        "corneltek/cliframework": "^3.0"
+        "corneltek/cliframework": "^3.0",
+        "league/climate": "^3.4"
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/",
-            "Console\\": "console/"
+            "App\\": "src/"
         }
     },
     "require-dev": {
