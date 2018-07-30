@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Container;
 use Exception;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -12,7 +13,7 @@ use FastRoute\Dispatcher;
 use FastRoute\RouteCollector as FastRouteCollector;
 use FastRoute\RouteParser\Std;
 
-use App\Controllers\PublicController;
+use App\Http\Controllers\PublicController;
 use Symfony\Component\HttpFoundation\Response;
 
 class Router extends FastRouteCollector

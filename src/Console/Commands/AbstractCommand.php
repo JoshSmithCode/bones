@@ -16,6 +16,11 @@ abstract class AbstractCommand implements CommandInterface
      */
     protected $app;
 
+    public function logSuccess(string $string, string $color = 'green'): void
+    {
+        (new CLImate)->$color()->out($string);
+    }
+
     public function logInfo(string $string, string $color = 'white'): void
     {
         (new CLImate)->$color()->out($string);

@@ -2,7 +2,7 @@
 
 namespace App\Http;
 
-use App\Controllers\PublicController;
+use App\Http\Controllers\PublicController;
 
 class Routes
 {

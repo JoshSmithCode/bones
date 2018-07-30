@@ -2,7 +2,7 @@
 
 use Symfony\Component\HttpFoundation\Request;
 
-use App\Main;
+use App\Http\Main;
 
 require __DIR__ . '/../vendor/autoload.php';
 

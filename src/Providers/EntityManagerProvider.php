@@ -21,11 +21,11 @@ class EntityManagerProvider implements ProviderInterface
         $isDevMode = $config->getAppEnv() == 'development';
 
         $dbParams = [
-            'driver'   => 'pdo_mysql',
-            'UserEntity'     => $config->getDbUser(),
-            'password' => $config->getDbPass(),
-            'dbname'   => $config->getDbName(),
-            'host'     => $config->getDbHost(),
+            'driver'     => 'pdo_mysql',
+            'user' => $config->getDbUser(),
+            'password'   => $config->getDbPass(),
+            'dbname'     => $config->getDbName(),
+            'host'       => $config->getDbHost(),
         ];
 
         $metadataConfig = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);

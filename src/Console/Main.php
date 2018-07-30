@@ -5,7 +5,7 @@ namespace App\Console;
 use App\Bones;
 use App\Console\Commands\AbstractCommand;
 use App\Console\Commands\ExampleCommand;
-use App\Console\Commands\GenerateMigrationCommand;
+use App\Console\Commands\MigrateDatabaseCommand;
 use App\Console\Commands\HelpCommand;
 
 class Main extends Bones
@@ -43,7 +43,7 @@ class Main extends Bones
     {
         $this->addCommand('help', HelpCommand::class);
         $this->addCommand('example', ExampleCommand::class);
-        $this->addCommand('migration:generate', GenerateMigrationCommand::class)
+        $this->addCommand('migrate', MigrateDatabaseCommand::class);
     }
 
     private function addCommand(string $name, string $class)
