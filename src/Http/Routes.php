@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\UserController;
 
 class Routes
 {
@@ -28,5 +29,9 @@ class Routes
         $router->get('/', [PublicController::class, 'index']);
 
         $router->post('/signup', [PublicController::class, 'signup']);
+
+        $router->post('/login', [PublicController::class, 'login']);
+
+        $router->get('/profile', [UserController::class, 'profile']);
     }
 }

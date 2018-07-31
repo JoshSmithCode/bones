@@ -5,6 +5,8 @@ namespace App\Http;
 use App\Bones;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
 
 class Main extends Bones
 {
@@ -13,6 +15,8 @@ class Main extends Bones
         $container = $this->getContainer();
 
         $container->store(Request::class, $request);
+
+        $container->bind(SessionStorageInterface::class, NativeSessionStorage::class);
 
         ## A router based on FastRoute that stores all the different url's we'll respond to
         $router = new Router($container);

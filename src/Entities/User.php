@@ -29,8 +29,8 @@ class User extends AbstractEntity
      */
     public function __construct($email, $password)
     {
-        $this->email = $this->setEmail($email);
-        $this->password = $this->setPassword($password);
+        $this->setEmail($email);
+        $this->setPassword($password);
     }
 
     /**

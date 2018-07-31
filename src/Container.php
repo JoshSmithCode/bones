@@ -71,11 +71,19 @@ class Container
         {
             if($param->isOptional()) {
                 $builtParams[] = null;
+                continue;
+            }
+
+            if($param->isDefaultValueAvailable())
+            {
+                $builtParams[] = $param->getDefaultValue();
+                continue;
             }
 
             if($param->getClass() == null)
             {
-                var_dump($constructorParams);die;
+                var_dump($param);
+                throw new \Exception("Can't handle constructing these params with injection, not a class, no default value");
             }
 
             $builtParams[] = $this->get($param->getClass()->getName());
