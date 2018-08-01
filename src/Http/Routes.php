@@ -18,7 +18,7 @@ class Routes
      * the URL http://bones.com/home
      *
      * The second argument is how our dispatcher will know what to do. It's just an array where the first thing is the
-     * controller class, and the second thing is the controller function we want to handle the request
+     * controller class, and the second thing is the controller function we want to handle the request.
      *
      * (If you don't like that, just have a look at the Router 'dispatch' function, you can change the shape there)
      *
@@ -26,11 +26,11 @@ class Routes
      */
     public function addRoutes(Router $router)
     {
-        $router->get('/', [PublicController::class, 'index']);
+        $router->publicGet('/', [PublicController::class, 'index']);
 
-        $router->post('/signup', [PublicController::class, 'signup']);
+        $router->publicPost('/signup', [PublicController::class, 'signup']);
 
-        $router->post('/login', [PublicController::class, 'login']);
+        $router->publicPost('/login', [PublicController::class, 'login']);
 
         $router->get('/profile', [UserController::class, 'profile']);
     }

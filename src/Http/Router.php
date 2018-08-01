@@ -14,6 +14,7 @@ use FastRoute\RouteCollector as FastRouteCollector;
 use FastRoute\RouteParser\Std;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\Session;
 
 class Router extends FastRouteCollector
 {
@@ -59,7 +60,13 @@ class Router extends FastRouteCollector
 
             case Dispatcher::FOUND:
 
-                [$controllerClass, $method] = $handler;
+                [$controllerClass, $method, $public] = $handler;
+
+                $session = $this->container->get(Session::class);
+                if(!$session->get('user') && !$public)
+                {
+                    throw new Exception("You're not allowed in here!");
+                }
 
                 $controller = $this->container->get($controllerClass);
                 $methodArgs = $this->container->getMethodArgs($controller, $method);
@@ -68,5 +75,53 @@ class Router extends FastRouteCollector
 
                 return $controller->$method(...$methodArgs);
         }
+    }
+
+     ##
+     # Okay, so what's going on below? This looks like magic, right?
+     #
+     # This little set of four functions is just to help make things more readable.
+     # The third thing we can pass to the handler is just a simple Boolean that tells the router whether or not the
+     # route is public. For public routes, anyone can access them, for private routes, you'd need to be logged in.
+     #
+     # So why not just pass that in the routes? Well, a random boolean as the third item in the array is hard to explain.
+     # We could give it a key like [ "public" => true ], but then it would feel like we need keys for the controller and method.
+     #
+     # To keep things simple, there's just two functions for the two main methods, post and get. All it does is add the
+     # third key in the array. If you don't like these, just use the post/get functions yourself and set the bool. These
+     # functions wont override settings from the Routes.php file.
+     #
+     ##
+
+    public function publicPost(string $route, array $handler)
+    {
+        $handler[] = true;
+        parent::post($route, $handler);
+    }
+
+    public function publicGet(string $route, array $handler)
+    {
+        $handler[] = true;
+        parent::get($route, $handler);
+    }
+
+    public function post($route, $handler)
+    {
+        if(isset($handler[2]))
+        {
+            parent::post($route, $handler);
+        }
+        $handler[] = false;
+        parent::post($route, $handler);
+    }
+
+    public function get($route, $handler)
+    {
+        if(isset($handler[2]))
+        {
+            parent::get($route, $handler);
+        }
+        $handler[] = false;
+        parent::get($route, $handler);
     }
 }
