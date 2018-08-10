@@ -1,5 +1,0 @@
-var _user$project$Model$initial = {loginEmail: '', loginPassword: '', signupEmail: '', signupPassword: ''};
-var _user$project$Model$Model = F4(
-	function (a, b, c, d) {
-		return {loginEmail: a, loginPassword: b, signupEmail: c, signupPassword: d};
-	});
