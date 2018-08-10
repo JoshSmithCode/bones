@@ -1,0 +1,10 @@
+var _user$project$Frontpage$main = _elm_lang$html$Html$program(
+	{
+		init: A2(
+			_elm_lang$core$Platform_Cmd_ops['!'],
+			_user$project$Model$initial,
+			{ctor: '[]'}),
+		update: _user$project$Update$update,
+		subscriptions: _elm_lang$core$Basics$always(_elm_lang$core$Platform_Sub$none),
+		view: _user$project$View$view
+	})();

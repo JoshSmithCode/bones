@@ -1,0 +1,12 @@
+var _user$project$Msg$UpdateSignupPassword = function (a) {
+	return {ctor: 'UpdateSignupPassword', _0: a};
+};
+var _user$project$Msg$UpdateSignupEmail = function (a) {
+	return {ctor: 'UpdateSignupEmail', _0: a};
+};
+var _user$project$Msg$UpdateLoginPassword = function (a) {
+	return {ctor: 'UpdateLoginPassword', _0: a};
+};
+var _user$project$Msg$UpdateLoginEmail = function (a) {
+	return {ctor: 'UpdateLoginEmail', _0: a};
+};

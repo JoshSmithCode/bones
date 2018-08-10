@@ -15,7 +15,7 @@ class PublicController extends AbstractController
 {
     public function index()
     {
-        return new Response(file_get_contents('../src/Templates/index.html'));
+        return new Response(file_get_contents('../src/View/Templates/index.html'));
 
     }
 
