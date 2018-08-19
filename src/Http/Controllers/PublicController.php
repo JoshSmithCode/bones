@@ -34,7 +34,7 @@ class PublicController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return new RedirectResponse('/login');
+        return new RedirectResponse('/');
     }
 
     public function login(Request $request, UserRepository $userRepository, Session $session): Response

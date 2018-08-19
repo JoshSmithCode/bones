@@ -1,8 +1,9 @@
 module Msg exposing (..)
 
+import Model exposing (Mode)
+
 
 type Msg
-    = UpdateLoginEmail String
-    | UpdateLoginPassword String
-    | UpdateSignupEmail String
-    | UpdateSignupPassword String
+    = SetMode (Maybe Mode)
+    | UpdateEmail String
+    | UpdatePassword String

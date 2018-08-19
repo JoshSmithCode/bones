@@ -5,3 +5,4 @@ composer.lock
 **/*.log
 !logs/.gitkeep
 elm-stuff/
+public/build/
