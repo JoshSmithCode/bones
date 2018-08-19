@@ -15,8 +15,9 @@ class PublicController extends AbstractController
 {
     public function index()
     {
-        return new Response(file_get_contents('../src/View/Templates/index.html'));
+        $view = $this->renderTemplate("frontpage.twig");
 
+        return new Response($view);
     }
 
     public function signup(EntityManager $entityManager, Request $request, Session $session): Response

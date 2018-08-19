@@ -2,11 +2,15 @@
 
 namespace App\Http;
 
-use App\Bones;
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Storage\SessionStorageInterface;
+
+use App\Bones;
+use App\Config;
+
+use Twig_Environment;
+use Twig_Loader_Filesystem;
 
 class Main extends Bones
 {
@@ -17,6 +21,15 @@ class Main extends Bones
         $container->store(Request::class, $request);
 
         $container->bind(SessionStorageInterface::class, NativeSessionStorage::class);
+
+        /** @var Config $config */
+        $config = $container->get('config');
+
+        ## We're going to load Twig here. It's a nicer way to do templating, rather than just writing plain php/html
+        $twigFileLoader = new Twig_Loader_Filesystem(realpath(__DIR__) . "/../View/Templates/");
+        $twig = new Twig_Environment($twigFileLoader, ['debug' => $config->getAppEnv() == 'development']);
+
+        $container->store(Twig_Environment::class, $twig);
 
         ## A router based on FastRoute that stores all the different url's we'll respond to
         $router = new Router($container);
