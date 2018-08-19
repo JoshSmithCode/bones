@@ -19,7 +19,7 @@ class PublicController extends AbstractController
 
     }
 
-    public function signup(EntityManager $entityManager, Request $request): Response
+    public function signup(EntityManager $entityManager, Request $request, Session $session): Response
     {
         $email = $request->get('email');
         $password = $request->get('password');
@@ -34,7 +34,9 @@ class PublicController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return new RedirectResponse('/');
+        $session->set('user', $user);
+
+        return new RedirectResponse('/profile');
     }
 
     public function login(Request $request, UserRepository $userRepository, Session $session): Response
